@@ -104,3 +104,8 @@ variable "cloudtrail_depends_on" {
   description = "External resources which should be set up before CloudTrail."
   default     = []
 }
+
+variable "kms_enabled" {
+  type = bool
+  default = false
+}
