@@ -250,7 +250,21 @@ resource "aws_cloudtrail" "global" {
   s3_bucket_name                = var.s3_bucket_name
   s3_key_prefix                 = var.s3_key_prefix
   sns_topic_name                = var.cloudtrail_sns_topic_enabled ? aws_sns_topic.cloudtrail-sns-topic[0].arn : null
-  event_selector                = var.event_selector
+  dynamic "event_selector" {
+    for_each = var.event_selector
+    content {
+      include_management_events = lookup(event_selector.value, "include_management_events", null)
+      read_write_type           = lookup(event_selector.value, "read_write_type", null)
+
+      dynamic "data_resource" {
+        for_each = lookup(event_selector.value, "data_resource", [])
+        content {
+          type   = data_resource.value.type
+          values = data_resource.value.values
+        }
+      }
+    }
+  }
 
   tags = var.tags
 
