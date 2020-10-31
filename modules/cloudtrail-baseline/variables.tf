@@ -75,6 +75,21 @@ variable "s3_object_level_logging_buckets" {
   default     = ["arn:aws:s3:::"] # All S3 buckets
 }
 
+variable "event_selector" {
+  type = list(object({
+    include_management_events = bool
+    read_write_type           = string
+
+    data_resource = list(object({
+      type   = string
+      values = list(string)
+    }))
+  }))
+
+  description = "Specifies an event selector for enabling data event logging. See: https://www.terraform.io/docs/providers/aws/r/cloudtrail.html for details on this variable"
+  default     = []
+}
+
 variable "tags" {
   description = "Specifies object tags key and value. This applies to all resources created by this module."
   default = {
