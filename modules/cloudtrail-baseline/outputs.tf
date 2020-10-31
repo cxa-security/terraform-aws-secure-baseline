@@ -10,7 +10,7 @@ output "cloudtrail_sns_topic" {
 
 output "kms_key" {
   description = "The  KMS key used for encrypting CloudTrail events."
-  value       = var.enabled ? aws_kms_key.cloudtrail[0] : null
+  value       = var.enabled && var.kms_enabled ? aws_kms_key.cloudtrail[0] : null
 }
 
 output "log_delivery_iam_role" {
