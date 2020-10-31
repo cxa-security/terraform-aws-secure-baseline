@@ -207,7 +207,7 @@ resource "aws_sns_topic" "cloudtrail-sns-topic" {
   count = var.cloudtrail_sns_topic_enabled && var.enabled ? 1 : 0
 
   name              = var.cloudtrail_sns_topic_name
-  kms_master_key_id = aws_kms_key.cloudtrail[0].id
+  kms_master_key_id = var.kms_enabled ? aws_kms_key.cloudtrail[0].id : null
 }
 
 data "aws_iam_policy_document" "cloudtrail-sns-policy" {
