@@ -54,6 +54,7 @@ module "cloudtrail_baseline" {
   s3_bucket_name                    = local.audit_log_bucket_id
   s3_key_prefix                     = var.cloudtrail_s3_key_prefix
   s3_object_level_logging_buckets   = var.cloudtrail_s3_object_level_logging_buckets ? var.cloudtrail_s3_object_level_logging_buckets : 0
+  event_selector                    = var.cloudtrail_event_selector ? var.cloudtrail_event_selector : 0
   is_organization_trail             = local.is_master_account
   tags                              = var.tags
 }

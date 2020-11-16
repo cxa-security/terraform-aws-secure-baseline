@@ -307,6 +307,20 @@ variable "cloudtrail_s3_object_level_logging_buckets" {
   default     = ["arn:aws:s3:::"] # All S3 buckets
 }
 
+variable "cloudtrail_event_selector" {
+  type = list(object({
+    include_management_events = bool
+    read_write_type           = string
+
+    data_resource = list(object({
+      type   = string
+      values = list(string)
+    }))
+  }))
+
+  description = "Specifies an event selector for enabling data event logging. See: https://www.terraform.io/docs/providers/aws/r/cloudtrail.html for details on this variable"
+  default     = []
+}
 
 # --------------------------------------------------------------------------------------------------
 # Variables for alarm-baseline module.
